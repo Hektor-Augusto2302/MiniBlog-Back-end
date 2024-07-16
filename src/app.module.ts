@@ -1,11 +1,21 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { Module, OnModuleInit } from '@nestjs/common';
+import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './users/users.module';
+import { Connection } from 'mongoose';
+import { InjectConnection } from '@nestjs/mongoose';
 
 @Module({
-  imports: [UsersModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    DatabaseModule,
+    UsersModule,
+  ],
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+  constructor(@InjectConnection() private readonly connection: Connection) {}
+
+  onModuleInit() {
+    this.connection.once('open', () => {
+      console.log('Successfully connected to MongoDB');
+    });
+  }
+}
