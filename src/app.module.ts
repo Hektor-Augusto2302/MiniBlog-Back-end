@@ -5,17 +5,17 @@ import { Connection } from 'mongoose';
 import { InjectConnection } from '@nestjs/mongoose';
 
 @Module({
-  imports: [
-    DatabaseModule,
-    UsersModule,
-  ],
+    imports: [
+        DatabaseModule,
+        UsersModule,
+    ],
 })
 export class AppModule implements OnModuleInit {
-  constructor(@InjectConnection() private readonly connection: Connection) {}
+    constructor(@InjectConnection() private readonly connection: Connection) { }
 
-  onModuleInit() {
-    this.connection.once('open', () => {
-      console.log('Successfully connected to MongoDB');
-    });
-  }
+    onModuleInit() {
+        this.connection.once('open', () => {
+            console.log('Conexão bem sucedida com MongoDB');
+        });
+    }
 }
