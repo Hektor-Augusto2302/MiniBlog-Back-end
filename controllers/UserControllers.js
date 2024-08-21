@@ -30,6 +30,7 @@ const registerUser = async (req, res) => {
         res.status(201).json({
             _id: newUser._id,
             token: generateToken(),
+            message: "Usuario criado com sucesso",
         });
     } catch (error) {
         console.error('Erro ao registrar usuário:', error);
